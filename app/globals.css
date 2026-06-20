@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — update with client's real colors before launch */
+  --color-primary: #0d1b2a;
+  --color-primary-light: #1a3a5c;
+  --color-accent: #c9a227;
+  --color-accent-light: #e6c04d;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Spacing / sizing */
+  --radius: 0.5rem;
+}
+
+:root {
+  --primary: #0d1b2a;
+  --primary-light: #1a3a5c;
+  --accent: #c9a227;
+  --accent-light: #e6c04d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: #1f2937;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Section spacing utility */
+.section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* Rich text output */
+.prose-cms h1,
+.prose-cms h2,
+.prose-cms h3 {
+  color: var(--primary);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+.prose-cms p {
+  margin-bottom: 1em;
+  line-height: 1.75;
+  color: #374151;
+}
+.prose-cms ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+.prose-cms a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Hero slider */
+.hero-slider-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
