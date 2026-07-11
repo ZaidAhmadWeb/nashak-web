@@ -108,12 +108,14 @@ export default async function CategoryPage({ params }: Props) {
               {cat.subtypes.map((sub, i) => (
                 <div key={i} className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow">
                   <div className="relative aspect-square bg-(--primary)">
-                    <Image
-                      src={getStrapiMediaUrl(sub.image.url)}
-                      alt={sub.name}
-                      fill
-                      className="object-cover"
-                    />
+                    {sub.image && (
+                      <Image
+                        src={getStrapiMediaUrl(sub.image.url)}
+                        alt={sub.name}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                   <div className="p-4">
                     <h3 className="font-bold text-(--primary)">{sub.name}</h3>
@@ -142,7 +144,9 @@ export default async function CategoryPage({ params }: Props) {
               {cat.materials.map((mat, i) => (
                 <div key={i} className="flex gap-4 items-start p-4 rounded-xl border border-gray-100">
                   <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-gray-100">
-                    <Image src={getStrapiMediaUrl(mat.image.url)} alt={mat.name} fill className="object-cover" />
+                    {mat.image && (
+                      <Image src={getStrapiMediaUrl(mat.image.url)} alt={mat.name} fill className="object-cover" />
+                    )}
                   </div>
                   <div>
                     <h3 className="font-semibold text-(--primary)">{mat.name}</h3>
@@ -167,7 +171,9 @@ export default async function CategoryPage({ params }: Props) {
               {cat.readyToGoColors.map((swatch, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5">
                   <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow">
-                    <Image src={getStrapiMediaUrl(swatch.image.url)} alt={swatch.name} fill className="object-cover" />
+                    {swatch.image && (
+                      <Image src={getStrapiMediaUrl(swatch.image.url)} alt={swatch.name} fill className="object-cover" />
+                    )}
                   </div>
                   <p className="text-xs text-gray-600">{swatch.name}</p>
                 </div>

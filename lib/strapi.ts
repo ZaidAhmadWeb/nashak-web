@@ -14,7 +14,6 @@ export async function fetchAPI<T>(
 ): Promise<T> {
   const query = new URLSearchParams(params).toString();
   const url = `${STRAPI_URL}/api${path}${query ? `?${query}` : ""}`;
-  console.log(`Fetching Strapi API: ${url} ${STRAPI_API_TOKEN}`);
   const headers: HeadersInit = { "Content-Type": "application/json" };
   if (STRAPI_API_TOKEN) headers["Authorization"] = `Bearer ${STRAPI_API_TOKEN}`;
 
