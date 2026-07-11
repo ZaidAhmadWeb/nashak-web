@@ -1,10 +1,14 @@
 import type { MetadataRoute } from 'next';
-import { getAllProductCategories } from '@/lib/strapi';
+import { getAllProductCategories, getAllSubCategories, getAllProducts } from '@/lib/strapi';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.yourdomain.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const categories = await getAllProductCategories();
+  const [categories, subCategories, products] = await Promise.all([
+    getAllProductCategories(),
+    getAllSubCategories(),
+    getAllProducts(),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
@@ -27,5 +31,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...categoryRoutes];
+  const subCategoryRoutes: MetadataRoute.Sitemap = subCategories
+    .filter(sub => sub.category?.slug)
+    .map(sub => ({
+      url: `${BASE_URL}/${sub.category!.slug}/${sub.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }));
+
+  const productRoutes: MetadataRoute.Sitemap = products
+    .filter(product => product.subCategory?.slug && product.subCategory.category?.slug)
+    .map(product => ({
+      url: `${BASE_URL}/${product.subCategory!.category!.slug}/${product.subCategory!.slug}/${product.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }));
+
+  return [...staticRoutes, ...categoryRoutes, ...subCategoryRoutes, ...productRoutes];
 }
