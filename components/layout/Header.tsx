@@ -50,7 +50,6 @@ export default function Header({ global, categories }: HeaderProps) {
   const logoUrl = global?.logoDark
     ? getStrapiMediaUrl(global.logoDark.url)
     : null;
-  console.log('Global data in Header:', global); // Debugging log
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="container mx-auto px-6 lg:px-16 h-20 flex items-center justify-between gap-8">
