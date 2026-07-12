@@ -33,7 +33,7 @@ export default async function PartnersPage() {
             <SectionHeading eyebrow="Global Reach" title="Our Partners &amp; Clients" center />
             <div className="mt-12 flex flex-wrap justify-center items-center gap-10">
               {page.partnerLogos.map((item, i) => (
-                item.link ? (
+                !item.logo ? null : item.link ? (
                   <a key={i} href={item.link} target="_blank" rel="noopener noreferrer">
                     <Image
                       src={getStrapiMediaUrl(item.logo.url)}

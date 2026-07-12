@@ -213,7 +213,7 @@ export default async function HomePage() {
               Certifications & Accreditations
             </p>
             <div className="flex flex-wrap justify-center items-center gap-10">
-              {page.certificationLogos.map((item, i) => (
+              {page.certificationLogos.map((item, i) => item.logo && (
                 <Image
                   key={i}
                   src={getStrapiMediaUrl(item.logo.url)}
@@ -277,7 +277,7 @@ export default async function HomePage() {
               Trusted By Leading Brands
             </p>
             <div className="flex flex-wrap justify-center items-center gap-10">
-              {page.clientLogos.map((item, i) => (
+              {page.clientLogos.map((item, i) => item.logo && (
                 <Image
                   key={i}
                   src={getStrapiMediaUrl(item.logo.url)}

@@ -30,7 +30,7 @@ export default async function GalleryPage() {
             <p className="text-center text-gray-500 py-16">No images yet — add them in the CMS portal.</p>
           ) : (
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-              {images.map(img => (
+              {images.map(img => img.image && (
                 <div key={img.id} className="break-inside-avoid overflow-hidden rounded-lg group relative">
                   <Image
                     src={getStrapiMediaUrl(img.image.url)}
