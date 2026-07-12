@@ -142,30 +142,17 @@ export interface ProductCategory {
   publishedAt?: string | null;
 }
 
-export interface SubCategory {
+export interface Product {
   id: number;
   documentId: string;
   name: string;
   slug: string;
   category?: ProductCategory | null;
   cardImage?: StrapiMedia | null;
-  heroImage?: StrapiMedia | null;
-  introHeading?: string | null;
-  introDescription?: string | null;
-  seo?: Seo | null;
-  publishedAt?: string | null;
-}
-
-export interface Product {
-  id: number;
-  documentId: string;
-  name: string;
-  slug: string;
-  subCategory?: SubCategory | null;
-  cardImage?: StrapiMedia | null;
   gallery?: StrapiMedia[];
   shortDescription?: string | null;
   description?: string | null;
+  modelsAvailable?: number | null;
   materials?: Material[];
   colors?: ColorSwatch[];
   sizeOptions?: OptionTag[];
@@ -220,6 +207,7 @@ export interface HomePage {
   heroSlides?: HeroSlide[];
   processSteps?: ProcessStep[];
   featuredCategories?: { data: ProductCategory[] };
+  featuredProducts?: { data: Product[] };
   stats?: Stat[];
   quoteText?: string | null;
   quoteAuthorName?: string | null;

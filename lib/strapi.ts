@@ -66,6 +66,8 @@ export async function getHomePage() {
       "populate[heroSlides][populate]": "*",
       "populate[processSteps][populate]": "*",
       "populate[featuredCategories][populate]": "*",
+      "populate[featuredProducts][populate][cardImage]": "true",
+      "populate[featuredProducts][populate][category]": "true",
       "populate[stats]": "*",
       "populate[quoteAuthorSignature]": "true",
       "populate[capabilities][populate]": "*",
@@ -202,62 +204,22 @@ export async function getProductCategoryBySlug(slug: string) {
   return res.data?.[0] ?? null;
 }
 
-export async function getAllSubCategories() {
-  const res = await fetchAPI<{ data: import("./types").SubCategory[] }>(
-    "/sub-categories",
-    {
-      "populate[category]": "true",
-      "pagination[pageSize]": "200",
-    },
-  );
-  return res.data ?? [];
-}
-
-export async function getSubCategoriesByCategory(categorySlug: string) {
-  const res = await fetchAPI<{ data: import("./types").SubCategory[] }>(
-    "/sub-categories",
-    {
-      "filters[category][slug][$eq]": categorySlug,
-      "populate[cardImage]": "true",
-      "populate[heroImage]": "true",
-      ...SEO_POPULATE,
-      "pagination[pageSize]": "100",
-    },
-  );
-  return res.data ?? [];
-}
-
-export async function getSubCategoryBySlug(categorySlug: string, subCategorySlug: string) {
-  const res = await fetchAPI<{ data: import("./types").SubCategory[] }>(
-    "/sub-categories",
-    {
-      "filters[slug][$eq]": subCategorySlug,
-      "filters[category][slug][$eq]": categorySlug,
-      "populate[cardImage]": "true",
-      "populate[heroImage]": "true",
-      ...SEO_POPULATE,
-    },
-  );
-  return res.data?.[0] ?? null;
-}
-
 export async function getAllProducts() {
   const res = await fetchAPI<{ data: import("./types").Product[] }>(
     "/products",
     {
-      "populate[subCategory][populate][category]": "true",
+      "populate[category]": "true",
       "pagination[pageSize]": "300",
     },
   );
   return res.data ?? [];
 }
 
-export async function getProductsBySubCategory(categorySlug: string, subCategorySlug: string) {
+export async function getProductsByCategory(categorySlug: string) {
   const res = await fetchAPI<{ data: import("./types").Product[] }>(
     "/products",
     {
-      "filters[subCategory][slug][$eq]": subCategorySlug,
-      "filters[subCategory][category][slug][$eq]": categorySlug,
+      "filters[category][slug][$eq]": categorySlug,
       "populate[cardImage]": "true",
       ...SEO_POPULATE,
       "pagination[pageSize]": "100",
@@ -266,13 +228,12 @@ export async function getProductsBySubCategory(categorySlug: string, subCategory
   return res.data ?? [];
 }
 
-export async function getProductBySlug(categorySlug: string, subCategorySlug: string, productSlug: string) {
+export async function getProductBySlug(categorySlug: string, productSlug: string) {
   const res = await fetchAPI<{ data: import("./types").Product[] }>(
     "/products",
     {
       "filters[slug][$eq]": productSlug,
-      "filters[subCategory][slug][$eq]": subCategorySlug,
-      "filters[subCategory][category][slug][$eq]": categorySlug,
+      "filters[category][slug][$eq]": categorySlug,
       "populate[cardImage]": "true",
       "populate[gallery]": "true",
       "populate[materials][populate]": "*",

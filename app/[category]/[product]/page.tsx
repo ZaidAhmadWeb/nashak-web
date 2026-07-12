@@ -13,23 +13,22 @@ import {
 } from '@/lib/strapi';
 
 interface Props {
-  params: Promise<{ category: string; subcategory: string; product: string }>;
+  params: Promise<{ category: string; product: string }>;
 }
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
   return products
-    .filter(product => product.subCategory?.slug && product.subCategory.category?.slug)
+    .filter(product => product.category?.slug)
     .map(product => ({
-      category: product.subCategory!.category!.slug,
-      subcategory: product.subCategory!.slug,
+      category: product.category!.slug,
       product: product.slug,
     }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, subcategory, product } = await params;
-  const prod = await getProductBySlug(category, subcategory, product);
+  const { category, product } = await params;
+  const prod = await getProductBySlug(category, product);
   if (!prod) return { title: 'Not Found' };
   return {
     title: prod.seo?.metaTitle || prod.name,
@@ -38,9 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { category, subcategory, product } = await params;
+  const { category, product } = await params;
   const [prod, global] = await Promise.all([
-    getProductBySlug(category, subcategory, product),
+    getProductBySlug(category, product),
     getGlobal(),
   ]);
 
@@ -62,6 +61,17 @@ export default async function ProductPage({ params }: Props) {
               className="prose-cms"
               dangerouslySetInnerHTML={{ __html: prod.description }}
             />
+          </div>
+        </section>
+      )}
+
+      {/* Models available */}
+      {typeof prod.modelsAvailable === 'number' && (
+        <section className="py-6 bg-gray-50">
+          <div className="container mx-auto px-6 lg:px-16">
+            <p className="text-sm font-semibold text-(--primary)">
+              {prod.modelsAvailable} models available
+            </p>
           </div>
         </section>
       )}

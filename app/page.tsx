@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
   const seo = page?.seo;
   return {
-    title: seo?.metaTitle || 'Home',
+    title: seo?.metaTitle || undefined,
     description: seo?.metaDescription || undefined,
     openGraph: seo?.ogImage ? { images: [{ url: getStrapiMediaUrl(seo.ogImage.url) }] } : undefined,
   };
@@ -32,7 +32,8 @@ export default async function HomePage() {
     ? page.featuredCategories.data
     : allCategories.slice(0, 4);
 
-    
+  const featuredProducts = page?.featuredProducts?.data ?? [];
+
   return (
     <>
       {/* Hero Slider */}
@@ -99,6 +100,41 @@ export default async function HomePage() {
               >
                 View All Products
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Featured Products */}
+      {!!featuredProducts.length && (
+        <section className="section bg-white">
+          <div className="container mx-auto px-6 lg:px-16">
+            <SectionHeading eyebrow="Featured" title="Featured Products" center />
+            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredProducts.map(product => (
+                <Link
+                  key={product.slug}
+                  href={product.category?.slug ? `/${product.category.slug}/${product.slug}` : '#'}
+                  className="group rounded-xl overflow-hidden bg-white shadow hover:shadow-lg transition-shadow"
+                >
+                  <div className="relative aspect-[4/3] bg-(--primary)">
+                    {product.cardImage && (
+                      <Image
+                        src={getStrapiMediaUrl(product.cardImage.url)}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-(--primary)">{product.name}</h3>
+                    {typeof product.modelsAvailable === 'number' && (
+                      <p className="text-sm text-gray-500 mt-1">{product.modelsAvailable} models available</p>
+                    )}
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

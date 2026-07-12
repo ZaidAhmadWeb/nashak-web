@@ -3,14 +3,19 @@ import { Geist } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { getGlobal, getAllProductCategories } from '@/lib/strapi';
+import { getGlobal, getAllProductCategories, getStrapiMediaUrl } from '@/lib/strapi';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' });
 
-export const metadata: Metadata = {
-  title: { default: '[Brand]', template: '%s | [Brand]' },
-  description: 'Premium B2B manufacturing.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const global = await getGlobal();
+  const siteName = global?.siteName || 'Nashak Enterprises';
+  return {
+    title: { default: siteName, template: `%s | ${siteName}` },
+    description: global?.defaultSeo?.metaDescription || 'Premium B2B manufacturing.',
+    icons: global?.favicon ? { icon: getStrapiMediaUrl(global.favicon.url) } : undefined,
+  };
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [global, categories] = await Promise.all([

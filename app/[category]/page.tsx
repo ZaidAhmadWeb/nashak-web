@@ -11,7 +11,7 @@ import {
   getStrapiMediaUrl,
   getAllProductCategories,
   getProductCategoryBySlug,
-  getSubCategoriesByCategory,
+  getProductsByCategory,
   getGlobal,
 } from '@/lib/strapi';
 
@@ -36,9 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { category } = await params;
-  const [cat, subCategories, global] = await Promise.all([
+  const [cat, products, global] = await Promise.all([
     getProductCategoryBySlug(category),
-    getSubCategoriesByCategory(category),
+    getProductsByCategory(category),
     getGlobal(),
   ]);
 
@@ -67,30 +67,33 @@ export default async function CategoryPage({ params }: Props) {
         </section>
       )}
 
-      {/* Sub-categories grid */}
-      {!!subCategories.length && (
+      {/* Products grid */}
+      {!!products.length && (
         <section className="section bg-gray-50">
           <div className="container mx-auto px-6 lg:px-16">
-            <SectionHeading eyebrow="Browse" title={`${cat.name} Sub-Categories`} />
+            <SectionHeading eyebrow="Products" title={`${cat.name} Products`} />
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {subCategories.map(sub => (
+              {products.map(product => (
                 <Link
-                  key={sub.slug}
-                  href={`/${category}/${sub.slug}`}
+                  key={product.slug}
+                  href={`/${category}/${product.slug}`}
                   className="group rounded-xl overflow-hidden bg-white shadow hover:shadow-lg transition-shadow"
                 >
                   <div className="relative aspect-[4/3] bg-(--primary)">
-                    {sub.cardImage && (
+                    {product.cardImage && (
                       <Image
-                        src={getStrapiMediaUrl(sub.cardImage.url)}
-                        alt={sub.name}
+                        src={getStrapiMediaUrl(product.cardImage.url)}
+                        alt={product.name}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     )}
                   </div>
                   <div className="p-4">
-                    <h3 className="font-bold text-(--primary)">{sub.name}</h3>
+                    <h3 className="font-bold text-(--primary)">{product.name}</h3>
+                    {typeof product.modelsAvailable === 'number' && (
+                      <p className="text-sm text-gray-500 mt-1">{product.modelsAvailable} models available</p>
+                    )}
                   </div>
                 </Link>
               ))}
