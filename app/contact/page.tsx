@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ContactForm from './ContactForm';
 import HeroBanner from '@/components/ui/HeroBanner';
 import BrochureCta from '@/components/ui/BrochureCta';
+import SocialLinks from '@/components/ui/SocialLinks';
 import { getContactPage, getGlobal } from '@/lib/strapi';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -51,6 +52,8 @@ export default async function ContactPage() {
                 </div>
               )}
             </div>
+
+            <SocialLinks links={global?.socialLinks} className="flex gap-4 mt-8" iconClassName="w-6 h-6" />
           </div>
 
           {/* Form */}
