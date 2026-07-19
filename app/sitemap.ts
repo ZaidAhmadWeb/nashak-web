@@ -1,13 +1,10 @@
 import type { MetadataRoute } from 'next';
-import { getAllProductCategories, getAllProducts } from '@/lib/strapi';
+import { getAllProductCategories } from '@/lib/strapi';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.yourdomain.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [categories, products] = await Promise.all([
-    getAllProductCategories(),
-    getAllProducts(),
-  ]);
+  const categories = await getAllProductCategories();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
@@ -30,14 +27,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const productRoutes: MetadataRoute.Sitemap = products
-    .filter(product => product.category?.slug)
-    .map(product => ({
-      url: `${BASE_URL}/${product.category!.slug}/${product.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    }));
-
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes];
+  return [...staticRoutes, ...categoryRoutes];
 }

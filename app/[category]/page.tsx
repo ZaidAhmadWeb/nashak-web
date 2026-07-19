@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import HeroBanner from '@/components/ui/HeroBanner';
 import SectionHeading from '@/components/ui/SectionHeading';
 import StatBar from '@/components/ui/StatBar';
@@ -74,18 +73,17 @@ export default async function CategoryPage({ params }: Props) {
             <SectionHeading eyebrow="Products" title={`${cat.name} Products`} />
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map(product => (
-                <Link
+                <div
                   key={product.slug}
-                  href={`/${category}/${product.slug}`}
-                  className="group rounded-xl overflow-hidden bg-white shadow hover:shadow-lg transition-shadow"
+                  className="rounded-xl overflow-hidden bg-white shadow"
                 >
-                  <div className="relative aspect-[4/3] bg-(--primary)">
+                  <div className="relative aspect-4/3 bg-(--primary)">
                     {product.cardImage && (
                       <Image
                         src={getStrapiMediaUrl(product.cardImage.url)}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover"
                       />
                     )}
                   </div>
@@ -95,7 +93,7 @@ export default async function CategoryPage({ params }: Props) {
                       <p className="text-sm text-gray-500 mt-1">{product.modelsAvailable} models available</p>
                     )}
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>

@@ -112,10 +112,9 @@ export default async function HomePage() {
             <SectionHeading eyebrow="Featured" title="Featured Products" center />
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredProducts.map(product => (
-                <Link
+                <div
                   key={product.slug}
-                  href={product.category?.slug ? `/${product.category.slug}/${product.slug}` : '#'}
-                  className="group rounded-xl overflow-hidden bg-white shadow hover:shadow-lg transition-shadow"
+                  className="rounded-xl overflow-hidden bg-white shadow"
                 >
                   <div className="relative aspect-[4/3] bg-(--primary)">
                     {product.cardImage && (
@@ -123,7 +122,7 @@ export default async function HomePage() {
                         src={getStrapiMediaUrl(product.cardImage.url)}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover"
                       />
                     )}
                   </div>
@@ -133,7 +132,7 @@ export default async function HomePage() {
                       <p className="text-sm text-gray-500 mt-1">{product.modelsAvailable} models available</p>
                     )}
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>
