@@ -155,15 +155,6 @@ export default function Header({ global, categories }: HeaderProps) {
             )}
           </div>
 
-          <Link href="/contact" className="hover:text-(--accent) transition-colors">
-            Contact Us
-          </Link>
-
-          {global?.phoneNumber && (
-            <a href={`tel:${global.phoneNumber}`} className="hover:text-(--accent) transition-colors">
-              {global.phoneNumber}
-            </a>
-          )}
         </nav>
 
         {/* CTA */}
@@ -212,10 +203,6 @@ export default function Header({ global, categories }: HeaderProps) {
               {cat.name}
             </Link>
           ))}
-          <hr className="border-gray-200" />
-          <Link href="/contact" className="block py-2 hover:text-(--accent)" onClick={() => setMobileOpen(false)}>
-            Contact Us
-          </Link>
           {global?.headerCta && (
             <Link href={global.headerCta.url} className="block mt-3 text-center bg-(--accent) text-(--primary) font-bold px-6 py-2.5 rounded" onClick={() => setMobileOpen(false)}>
               {global.headerCta.label}
