@@ -1,4 +1,8 @@
-const STRAPI_URL = process.env.STRAPI_URL ?? "http://localhost:1337";
+// NEXT_PUBLIC_STRAPI_URL is required here because getStrapiMediaUrl() is also called
+// from Client Components (e.g. HeroSlider). On client-side navigation those render
+// in the browser, where non-NEXT_PUBLIC_ env vars are never inlined and read as
+// undefined — silently falling back to localhost and breaking every image.
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL ?? process.env.STRAPI_URL ?? "http://localhost:1337";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN ?? "";
 
 export function getStrapiMediaUrl(url: string | null | undefined): string {

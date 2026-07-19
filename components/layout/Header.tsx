@@ -66,6 +66,10 @@ export default function Header({ global, categories }: HeaderProps) {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
+          <Link href="/" className="hover:text-(--accent) transition-colors">
+            Home
+          </Link>
+
           {/* Company dropdown */}
           <div className="relative">
             <button
@@ -189,6 +193,9 @@ export default function Header({ global, categories }: HeaderProps) {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-3 text-sm font-medium text-gray-700">
+          <Link href="/" className="block py-2 hover:text-(--accent)" onClick={() => setMobileOpen(false)}>
+            Home
+          </Link>
           {COMPANY_LINKS.map(link => (
             <Link key={link.href} href={link.href} className="block py-2 hover:text-(--accent)" onClick={() => setMobileOpen(false)}>
               {link.label}
