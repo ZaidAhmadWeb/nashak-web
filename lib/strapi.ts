@@ -74,6 +74,7 @@ export async function getHomePage() {
       "populate[featuredProducts][populate][category]": "true",
       "populate[stats]": "*",
       "populate[quoteAuthorSignature]": "true",
+      "populate[legacyImage]": "true",
       "populate[capabilities][populate]": "*",
       "populate[certificationLogos][populate]": "*",
       "populate[clientLogos][populate]": "*",

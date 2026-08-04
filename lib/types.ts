@@ -214,7 +214,7 @@ export interface HomePage {
   quoteAuthorSignature?: StrapiMedia | null;
   legacyHeading?: string | null;
   legacyDescription?: string | null;
-  legacyVideoUrl?: string | null;
+  legacyImage?: StrapiMedia | null;
   capabilities?: IconTextCard[];
   certificationLogos?: LogoItem[];
   sustainabilityTeaserHeading?: string | null;

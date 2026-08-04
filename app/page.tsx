@@ -170,21 +170,20 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Legacy / Video Teaser */}
+      {/* Legacy */}
       {page?.legacyHeading && (
         <section className="section bg-white">
           <div className="container mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <SectionHeading eyebrow="Our Legacy" title={page.legacyHeading} description={page.legacyDescription || undefined} />
             </div>
-            {page.legacyVideoUrl && (
-              <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
-                <iframe
-                  src={page.legacyVideoUrl}
-                  title="Brand Story"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+            {page.legacyImage && (
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-100">
+                <Image
+                  src={getStrapiMediaUrl(page.legacyImage.url)}
+                  alt={page.legacyImage.alternativeText || page.legacyHeading}
+                  fill
+                  className="object-cover"
                 />
               </div>
             )}
