@@ -34,6 +34,11 @@ export default function ProcessSteps({ steps }: { steps?: ProcessStep[] }) {
     setCurrent(c => (c + 1) % steps.length);
   }, [steps]);
 
+  const prev = useCallback(() => {
+    if (!steps?.length) return;
+    setCurrent(c => (c - 1 + steps.length) % steps.length);
+  }, [steps]);
+
   useEffect(() => {
     if (!steps || steps.length <= 1) return;
     const id = setInterval(next, 5000);
@@ -48,15 +53,37 @@ export default function ProcessSteps({ steps }: { steps?: ProcessStep[] }) {
       <div className="md:hidden">
         <StepContent step={steps[current]} />
         {steps.length > 1 && (
-          <div className="flex justify-center gap-2 mt-8">
-            {steps.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${i === current ? 'bg-(--accent)' : 'bg-gray-300'}`}
-                aria-label={`Step ${i + 1}`}
-              />
-            ))}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={prev}
+              className="w-9 h-9 shrink-0 rounded-full border-2 border-(--primary) text-(--primary) flex items-center justify-center hover:bg-(--primary) hover:text-white transition-colors"
+              aria-label="Previous step"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <div className="flex gap-2">
+              {steps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`w-2.5 h-2.5 rounded-full transition-colors ${i === current ? 'bg-(--accent)' : 'bg-gray-300'}`}
+                  aria-label={`Step ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              className="w-9 h-9 shrink-0 rounded-full border-2 border-(--primary) text-(--primary) flex items-center justify-center hover:bg-(--primary) hover:text-white transition-colors"
+              aria-label="Next step"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         )}
       </div>
