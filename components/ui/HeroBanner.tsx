@@ -11,7 +11,7 @@ interface HeroBannerProps {
 
 export default function HeroBanner({ image, heading, subheading, overlay = true }: HeroBannerProps) {
   return (
-    <section className="relative h-[420px] md:h-[540px] flex items-center">
+    <section className="relative h-[300px] sm:h-[380px] md:h-[540px] flex items-center">
       {image ? (
         <Image
           src={getStrapiMediaUrl(image.url)}

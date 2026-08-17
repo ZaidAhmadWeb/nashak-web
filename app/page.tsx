@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroSlider from '@/components/sections/HeroSlider';
+import ProcessSteps from '@/components/sections/ProcessSteps';
 import TestimonialCarousel from '@/components/sections/TestimonialCarousel';
 import StatBar from '@/components/ui/StatBar';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -44,25 +45,8 @@ export default async function HomePage() {
         <section className="section bg-white">
           <div className="container mx-auto px-6 lg:px-16">
             <SectionHeading title="Our Process" center />
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
-              {page.processSteps.map(step => (
-                <div key={step.stepNumber} className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-full bg-(--primary) text-white flex items-center justify-center text-2xl font-extrabold mb-4">
-                    {step.stepNumber}
-                  </div>
-                  {step.icon && (
-                    <Image
-                      src={getStrapiMediaUrl(step.icon.url)}
-                      alt={step.title}
-                      width={48}
-                      height={48}
-                      className="mb-3 object-contain"
-                    />
-                  )}
-                  <h3 className="text-lg font-bold text-(--primary)">{step.title}</h3>
-                  <p className="mt-2 text-gray-600 text-sm leading-relaxed">{step.description}</p>
-                </div>
-              ))}
+            <div className="mt-12">
+              <ProcessSteps steps={page.processSteps} />
             </div>
           </div>
         </section>

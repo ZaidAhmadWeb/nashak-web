@@ -21,7 +21,7 @@ export default function HeroSlider({ slides }: { slides?: HeroSlide[] }) {
 
   if (!slides?.length) {
     return (
-      <div className="relative h-[560px] md:h-[680px] bg-(--primary) flex items-center">
+      <div className="relative h-[380px] sm:h-[480px] md:h-[680px] bg-(--primary) flex items-center">
         <div className="container mx-auto px-6 lg:px-16">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
             Premium B2B Manufacturing
@@ -42,7 +42,7 @@ export default function HeroSlider({ slides }: { slides?: HeroSlide[] }) {
   }
 
   return (
-    <div className="relative h-[560px] md:h-[680px] overflow-hidden">
+    <div className="relative h-[380px] sm:h-[480px] md:h-[680px] overflow-hidden">
       {slides.map((slide, i) => (
         <div
           key={i}
